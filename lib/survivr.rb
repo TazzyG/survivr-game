@@ -35,32 +35,38 @@ def phase_one
 	## One contestant from the losing tribe is eliminated after every challenge at what is called a “Tribal Council”
 	8.times do |i|	
 		i = 0
-		tribe_who_lost = @borneo.immunity_challenge
+		tribe_who_lost = @borneo.losing_tribe
 		puts "#{tribe_who_lost}," + " I am afraid you have lost immunity challenge #{(i + 1)}" + " my friends"
-		member_out = tribe_who_lost.tribal_council
+		member_out = tribe_who_lost.losing_tribe
 		i += 1
 	end
-	phase_one
-	## At the end of phase one, there are a total of 12 remaining contestants.
-	@borneo.each do |member|
-		counts[member] += 1
-	end	
 end
 puts "You will now compete in 8 challenges for immunity. Good luck!"
 phase_one
+	## At the end of phase one, there are a total of 12 remaining contestants.
 
-## This is when they merge together into a single new tribe.
-def phase_two
-	eliminations = 0
-  3.times do
-    eliminated_member = @borneo.individual_immunity_challenge
-    elimination_report(eliminated_member)
-    tribe_report(@borneo.tribes[0])
-    eliminations += 1
-  end
-  eliminations
+#Phase Two:Merge
+def merge_tribes
+@contestants.push(@coyopa.members).flatten!
+@contestants.push(@hunapu.members).flatten!
 end
+merge_tribes
+@contestants.count # should be 12
 
+puts "Welcome Survivr Contestants - You have made it to Phase 2"
+# -  This is when they merge together into a single new tribe. - 
+
+def phase_two
+	# - The single tribe of 12 contestants compete in 3 additional individual immunity challenges.
+	# - The individual winner of every challenge is immune from being eliminated.(immunity)
+	
+  3.times do
+    eliminated_member = @borneo.immunity
+    # elimination_report(eliminated_member)
+    # tribe_report(@borneo.tribes[0])e
+  end
+end
+phase_two
 def phase_three
 	print_header("PHASE THREE")
   eliminations = 0
@@ -85,7 +91,7 @@ def print_header(phase)
 end
 
 def elimination_report(eliminated_member)
-  puts "#{eliminated_member.to_s.yellow} has been voted off the island."
+  puts "#{eliminated_member} has been voted off the island."
 end
 
 def tribe_report(tribe)
