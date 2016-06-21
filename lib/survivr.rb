@@ -1,33 +1,98 @@
-require_relative "game"
 require_relative "tribe"
 require_relative "contestant"
 require_relative "jury"
+require_relative "game"
 
 #After your tests pass, uncomment this code below
 #=========================================================
+# - Phase One: Pre-Merge -
 # # Create an array of twenty hopefuls to compete on the island of Borneo
-# @contestants = %w(carlos walter aparna trinh diego juliana poornima juha sofia julia fernando dena orit colt zhalisa farrin muhammed ari rasha gauri)
-# @contestants.map!{ |contestant| Contestant.new(contestant) }.shuffle!
+@contestants = %w(carlos walter aparna trinh diego juliana poornima juha sofia julia fernando dena orit colt zhalisa farrin muhammed ari rasha gauri)
+# - The game starts with 20 contestants. broken up evenly into two tribes of 10 contestants. -
+@contestants.length # should be 20
+# - Mix the contestants so they are not in a specific order -
+@contestants.map!{ |contestant| Contestant.new(contestant) }.shuffle!
 #
-# # Create two new tribes with names
-# @coyopa = Tribe.new(name: "Pagong", members: @contestants.shift(10))
-# @hunapu = Tribe.new(name: "Tagi", members: @contestants.shift(10))
+# - Create two new tribes with names -
+# -  20 contestants, broken up evenly into two tribes of 10 contestants. -
+@coyopa = Tribe.new(name: "Pagong", members: @contestants.shift(10))
+@hunapu = Tribe.new(name: "Tagi", members: @contestants.shift(10))
 #
+## Extra Test for good luck and to make sure we didn't accidentally leave someone out. 
+@contestants ## Should return => []
+
 # # Create a new game of Survivor
-# @borneo = Game.new(@coyopa, @hunapu)
+@borneo = Game.new(@coyopa, @hunapu)
 #=========================================================
-
-
+@borneo.tribes.each do |tribe|
+puts "Welcome #{tribe}"
+end
+puts "Let the game begin!"
 #This is where you will write your code for the three phases
 def phase_one
+	## The tribes compete in 8 challenges against each other in an immunity challenge. 
+	## There is a losing tribe every time.
+	## One contestant from the losing tribe is eliminated after every challenge at what is called a “Tribal Council”
+	8.times do |i|	
+		i = 0
+		tribe_who_lost = @borneo.immunity_challenge
+		puts "#{tribe_who_lost}," + " I am afraid you have lost immunity challenge #{(i + 1)}" + " my friends"
+		member_out = tribe_who_lost.tribal_council
+		i += 1
+	end
+	phase_one
+	## At the end of phase one, there are a total of 12 remaining contestants.
+	@borneo.each do |member|
+		counts[member] += 1
+	end	
 end
+puts "You will now compete in 8 challenges for immunity. Good luck!"
+phase_one
 
+## This is when they merge together into a single new tribe.
 def phase_two
+	eliminations = 0
+  3.times do
+    eliminated_member = @borneo.individual_immunity_challenge
+    elimination_report(eliminated_member)
+    tribe_report(@borneo.tribes[0])
+    eliminations += 1
+  end
+  eliminations
 end
 
 def phase_three
+	print_header("PHASE THREE")
+  eliminations = 0
+  7.times do |i|
+    eliminated_member = @borneo.individual_immunity_challenge
+    @jury.add_member(eliminated_member)
+    elimination_report(eliminated_member)
+    puts "#{eliminated_member} is the #{(i + 1).ordinalize.light_blue} jury member."
+    tribe_report(@borneo.tribes[0])
+    eliminations += 1
+  end
+  eliminations
 end
 
+# Shared Methods 
+
+def print_header(phase)
+  length = phase.length
+  puts "*".red * length
+  puts phase.red
+  puts "*".red * length
+end
+
+def elimination_report(eliminated_member)
+  puts "#{eliminated_member.to_s.yellow} has been voted off the island."
+end
+
+def tribe_report(tribe)
+  puts "The remaining members of " + "Tribe #{tribe}".green +  " are:\n\n"
+  puts tribe.members
+  puts ""
+end
 
 # If all the tests pass, the code below should run the entire simulation!!
 #=========================================================
