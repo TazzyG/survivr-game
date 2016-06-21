@@ -37,7 +37,7 @@ def phase_one
 		i = 0
 		tribe_who_lost = @borneo.losing_tribe
 		puts "#{tribe_who_lost}," + " I am afraid you have lost immunity challenge #{(i + 1)}" + " my friends"
-		member_out = tribe_who_lost.losing_tribe
+		member_out = tribe_who_lost.tribal_council
 		i += 1
 	end
 end
@@ -57,48 +57,37 @@ puts "Welcome Survivr Contestants - You have made it to Phase 2"
 # -  This is when they merge together into a single new tribe. - 
 
 def phase_two
+	@immunity_challengers = Tribe.new(members: @contestants)
+	@immunity_game = Game.new(@immunity_challengers)
 	# - The single tribe of 12 contestants compete in 3 additional individual immunity challenges.
 	# - The individual winner of every challenge is immune from being eliminated.(immunity)
 	
   3.times do
-    eliminated_member = @borneo.immunity
-    # elimination_report(eliminated_member)
-    # tribe_report(@borneo.tribes[0])e
+    immune_member = @immunity_game.immunity
+    eliminated_member = @immunity_challengers.tribal_council
   end
 end
 phase_two
-def phase_three
-	print_header("PHASE THREE")
-  eliminations = 0
-  7.times do |i|
-    eliminated_member = @borneo.individual_immunity_challenge
-    @jury.add_member(eliminated_member)
-    elimination_report(eliminated_member)
-    puts "#{eliminated_member} is the #{(i + 1).ordinalize.light_blue} jury member."
-    tribe_report(@borneo.tribes[0])
-    eliminations += 1
-  end
-  eliminations
-end
+# We now have 3 contestants immune from elimination
+# After 3 eliminations, there are 9 remaining contestants. 
+# 
 
-# Shared Methods 
+# def phase_three
+# 	print_header("PHASE THREE")
+#   eliminations = 0
+#   7.times do |i|
+#     eliminated_member = @borneo.individual_immunity_challenge
+#     @jury.add_member(eliminated_member)
+#     elimination_report(eliminated_member)
+#     puts "#{eliminated_member} is the #{(i + 1).ordinalize.light_blue} jury member."
+#     tribe_report(@borneo.tribes[0])
+#     eliminations += 1
+#   end
+#   eliminations
+# end
 
-def print_header(phase)
-  length = phase.length
-  puts "*".red * length
-  puts phase.red
-  puts "*".red * length
-end
+ 
 
-def elimination_report(eliminated_member)
-  puts "#{eliminated_member} has been voted off the island."
-end
-
-def tribe_report(tribe)
-  puts "The remaining members of " + "Tribe #{tribe}".green +  " are:\n\n"
-  puts tribe.members
-  puts ""
-end
 
 # If all the tests pass, the code below should run the entire simulation!!
 #=========================================================
