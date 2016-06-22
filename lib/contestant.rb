@@ -1,9 +1,8 @@
 class Contestant
 	attr_reader :name
 
-  def initialize(name, immunity)
+  def initialize(name)
   	@name = name
-  	@immunity = false
   end
 
   def to_s

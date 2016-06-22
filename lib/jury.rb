@@ -2,35 +2,33 @@ class Jury
 	attr_accessor  :members
 
   def initialize
-  	@members = []
+    @members = []
   end
   
-  def add_member(contestant)
-  	@members.push(contestant)
+  def add_member(member)
+  	@members.push(member)
+    puts "#{member}" + "is now added to the jury"
   end
 
   def cast_votes(finalists)
-  	votes = Hash.new
-  	finalists.each {|finalist| votes[finalist] = 0}
-  
-  @members.each do |member|
-    finalist = finalists.sample
-    votes[finalist] += 1
-    puts "#{member.to_s} voted for #{finalist.to_s}"
+  	votes = {}
+    finalists.each {|finalist| votes[finalist] = 0}
+    @members.each do |member|
+      choice = finalists.sample
+      votes[choice] += 1
+      puts "#{member.name} voted for #{choice}"
+      end
+    votes
+  end
+  def report_votes(vote_results)
+    vote_results.each do |finalist, vote_count|
+      puts "#{finalist.name} received #{vote_count} vote(s)."
     end
-  votes
   end
 
-  def report_votes(votes)
-    winner = votes.each {|finalist, votes|}[0]
-    puts "#{finalist.to_s} has " + "#{total_votes}" + " votes." 
-   
-  end
-
-  def announce_winner(votes)
-      highest_votes = votes.values.max
-      winner = votes.key(highest_votes)
-      puts "#{winner} Wins Survivr"
+  def announce_winner(vote_results)
+      winner = vote_results.max_by {|finalist, vote_results| vote_results}.first
+      puts "#{winner.name} wins survivr!! Yeah!!!!!!!!"
       winner
   end
 

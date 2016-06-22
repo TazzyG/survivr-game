@@ -6,17 +6,18 @@ attr_reader  :name, :members
   	@members = options[:members]
   	puts "Tribe #{@name} has been successfully initiated"
   end
-  def tribal_council(options = {})
-  	@members.shuffle!
-    elimation_pool = @members
-    if options[:immune]
-      elimination_pool.delete_if { |member| member == immune}
-    end
-  	voted_off = elimation_pool.sample 
-  	@members.delete(voted_off) 
-  	puts "#{voted_off} is voted off"
+
+  def tribal_council(immune_member = nil) 
+    unsafe_contestants = Array.new(@members)
+    unsafe_contestants.delete(immune_member) if immune_member && unsafe_contestants.include?(immune_member)
+    voted_off = unsafe_contestants.sample
+  end
+
+  def eliminate(member)
+    puts "#{member.name} from tribe #{self.name} has now been voted off the survivr server!"
+    @members.delete(member) if @members.include?(member)
   end
   def to_s
-    @name
+    @name 
   end 
 end
