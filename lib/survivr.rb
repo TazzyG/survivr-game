@@ -2,6 +2,15 @@ require_relative "game"
 require_relative "tribe"
 require_relative "contestant"
 require_relative "jury"
+require 'colorizr'
+
+def print_header(message)
+	puts "~".light_blue * 80
+	puts message.center(80).green
+	puts "~".light_blue * 80
+end 
+
+print_header("Welcome to Survivr!")
 
 #After your tests pass, uncomment this code below
 #=========================================================
@@ -13,20 +22,24 @@ require_relative "jury"
 @coyopa = Tribe.new(name: "Pagong", members: @contestants.shift(10))
 @hunapu = Tribe.new(name: "Tagi", members: @contestants.shift(10))
 
-# # Create a new game of Survivor
+# # Create a new game of Survivr
 @borneo = Game.new(@coyopa, @hunapu)
 #=========================================================
 
 
 #This is where you will write your code for the three phases
 def phase_one
-
 	#Intro
 
-	@borneo.tribes.each do |tribe|
-		puts "Welcome #{tribe}"
+		@borneo.tribes.each do |tribe|
+		puts "Welcome #{tribe}".black
 		end
-	puts "You will now compete in 8 challenges for immunity. Good luck!"
+
+print_header("For Phase 1, you will now compete in 8 challenges for immunity. Good luck!")
+
+
+
+
 	eliminations = []
 	8.times do
 		immunity_challenge_losing_tribe = @borneo.immunity_challenge
@@ -38,8 +51,9 @@ def phase_one
 end
 
 def phase_two
+
+	print_header("You have made it to Phase 2 and have 3 challenges to win immunity ")
 	
-puts "Welcome Survivr, Contestants - You have made it to Phase 2"	
 eliminations = []
   3.times do
   	individual_immunity_winner = @borneo.individual_immunity_challenge
@@ -52,7 +66,7 @@ end
 
 def phase_three
 
-	puts "Well done. You made it to Phase 3 - where you will face the Jury!... mwahahaha"
+	print_header ("Well done. You made it to Phase 3 - where you will face the Jury!... mwahahaha")
 	
 
 	# In phase three, there are 7 more challenges with an “immune” winner, as in the previous rounds.
@@ -75,7 +89,15 @@ phase_one #8 eliminations
 phase_two #3 more eliminations
 @jury = Jury.new
 phase_three #7 elminiations become jury members
+
+print_header (" Nice Work everyone. Here we will learn who the big winner is!")
+
 finalists = @merge_tribe.members #set finalists
 vote_results = @jury.cast_votes(finalists) #Jury members report votes
 @jury.report_votes(vote_results) #Jury announces their votes
+
+print_header ("Congratulations")
 @jury.announce_winner(vote_results) #Jury announces final winner
+
+
+print_header ("Thanks for Playing Survivr")

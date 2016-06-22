@@ -1,3 +1,5 @@
+require 'colorizr'
+
 class Game
 	attr_reader :tribes
 
@@ -11,7 +13,7 @@ class Game
 
 	def immunity_challenge
 		losing_tribe = @tribes.sample
-		puts "#{losing_tribe} has lost the immunity challenge and must now vote out 1 member"
+		puts "#{losing_tribe}".black + " has lost the immunity challenge and must now vote out 1 member."
 		losing_tribe
 	end
 
@@ -27,7 +29,7 @@ class Game
  
   def individual_immunity_challenge	
     individual_immunity_winner = @tribes[0].members.sample
-	  puts "#{@immune}"+ " you are safe from elimination."
+	  puts "#{individual_immunity_winner}".capitalize.yellow + ", you are safe from elimination :)"
 	  individual_immunity_winner
 	end
 end
