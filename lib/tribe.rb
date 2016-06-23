@@ -6,13 +6,26 @@ attr_reader  :name, :members
   def initialize(options = {})
   	@name = options[:name]
   	@members = options[:members]
-  	puts "Tribe #{@name}".black  + " has been successfully initiated."
+  	puts "Tribe #{@name}".green + " has been successfully initiated."
   end
 
-  def tribal_council(immune_member = nil) 
-    unsafe_contestants = Array.new(@members)
-    unsafe_contestants.delete(immune_member) if immune_member && unsafe_contestants.include?(immune_member)
-    voted_off = unsafe_contestants.sample
+  # def test_tribal_council_immune_is_not_voted_off
+  #   immune = @coyopa.members.first
+  #   immune_array = Array.new(9, immune)
+  #   9.times do
+  #     result = @coyopa.tribal_council(immune: immune)
+  #     p result
+  #     if  result.class == Contestant && result != immune
+  #       immune_array.pop
+  #     end
+  #   end
+  #   refute_includes immune_array, immune
+  # end
+
+
+  def tribal_council(immune = "")
+    not_immune = @members.select {|member| member != immune}
+    voted_off = not_immune.sample
   end
 
   def eliminate(member)
@@ -20,6 +33,7 @@ attr_reader  :name, :members
      " the survivr server!"
     @members.delete(member) if @members.include?(member)
   end
+
   def to_s
     @name 
   end 

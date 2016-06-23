@@ -18,7 +18,7 @@ class Jury
     @members.each do |member|
       choice = finalists.sample
       votes[choice] += 1
-      puts "#{member.name} ".capitalize.yellow +  "voted for " + "#{choice}.".capitalize.red 
+      puts "#{member} ".capitalize.yellow +  "voted for " + "#{choice}.".capitalize.red 
       end
     votes
   end

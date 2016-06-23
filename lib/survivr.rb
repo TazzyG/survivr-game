@@ -40,28 +40,25 @@ print_header("For Phase 1, you will now compete in 8 challenges for immunity. Go
 
 
 
-	eliminations = []
+	
 	8.times do
 		immunity_challenge_losing_tribe = @borneo.immunity_challenge
 		member_voted_off = immunity_challenge_losing_tribe.tribal_council
-		immunity_challenge_losing_tribe.eliminate(member_voted_off)
-		eliminations << member_voted_off
 	end
-	eliminations.count
+	
 end
 
 def phase_two
 
 	print_header("You have made it to Phase 2 and have 3 challenges to win immunity ")
 	
-eliminations = []
+
   3.times do
-  	individual_immunity_winner = @borneo.individual_immunity_challenge
-  	voted_off_member = @merge_tribe.tribal_council(individual_immunity_winner)
+  	immune = @borneo.individual_immunity_challenge
+  	voted_off_member =  @merge_tribe.tribal_council(immune: immune)
   	@merge_tribe.eliminate(voted_off_member)
-  	eliminations << voted_off_member
   end
-  eliminations.count
+  
 end
 
 def phase_three
@@ -70,15 +67,14 @@ def phase_three
 	
 
 	# In phase three, there are 7 more challenges with an “immune” winner, as in the previous rounds.
-	eliminations = []
+	
 	7.times do 
-		winner_of_individual_immunity = @borneo.individual_immunity_challenge
-		voted_off_member = @merge_tribe.tribal_council(winner_of_individual_immunity)
-		@merge_tribe.eliminate(voted_off_member)
+		immune = @borneo.individual_immunity_challenge
+		voted_off_member = @merge_tribe.tribal_council(immune: immune)
 		@jury.add_member(voted_off_member)
-		eliminations << voted_off_member	
+			
 	end	
-	eliminations.count
+	
 end
 
 # If all the tests pass, the code below should run the entire simulation!!

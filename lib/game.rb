@@ -4,7 +4,7 @@ class Game
 	attr_reader :tribes
 
 	def initialize(*tribes)
-		@tribes = tribes
+		@tribes = ([] << tribes).flatten
 	end
 
 	def add_tribe(tribe)
@@ -28,8 +28,8 @@ class Game
   end
  
   def individual_immunity_challenge	
-    individual_immunity_winner = @tribes[0].members.sample
-	  puts "#{individual_immunity_winner}".capitalize.yellow + ", you are safe from elimination :)"
-	  individual_immunity_winner
+    immune = @tribes[0].members.sample
+	  puts "#{immune}".capitalize.yellow + ", you are safe from elimination :)"
+	  immune
 	end
 end
