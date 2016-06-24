@@ -32,31 +32,26 @@ def phase_one
 	#Intro
 
 		@borneo.tribes.each do |tribe|
-		puts "Welcome #{tribe}".black
+		puts "Welcome #{tribe}".green
 		end
 
 print_header("For Phase 1, you will now compete in 8 challenges for immunity. Good luck!")
 
-
-
-
-	
 	8.times do
 		immunity_challenge_losing_tribe = @borneo.immunity_challenge
+		puts "#{immunity_challenge_losing_tribe}".green + " has lost the immunity challenge and must now vote out 1 member."
 		member_voted_off = immunity_challenge_losing_tribe.tribal_council
-	end
-	
+	end	
 end
 
 def phase_two
 
-	print_header("You have made it to Phase 2 and have 3 challenges to win immunity ")
-	
+	print_header("You have made it to Phase 2 and have 3 challenges to win immunity ")	
 
   3.times do
   	immune = @borneo.individual_immunity_challenge
-  	voted_off_member =  @merge_tribe.tribal_council(immune: immune)
-  	@merge_tribe.eliminate(voted_off_member)
+  	puts "#{immune}".capitalize.yellow + ", you are safe from elimination :)"
+  	voted_off_member =  @merge_tribe.tribal_council(immune: immune) 
   end
   
 end
@@ -68,11 +63,10 @@ def phase_three
 
 	# In phase three, there are 7 more challenges with an “immune” winner, as in the previous rounds.
 	
-	7.times do 
+	7.times do
 		immune = @borneo.individual_immunity_challenge
 		voted_off_member = @merge_tribe.tribal_council(immune: immune)
-		@jury.add_member(voted_off_member)
-			
+		@jury.add_member(voted_off_member)		
 	end	
 	
 end

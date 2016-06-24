@@ -18,7 +18,7 @@ class Jury
     @members.each do |member|
       choice = finalists.sample
       votes[choice] += 1
-      puts "#{member} ".capitalize.yellow +  "voted for " + "#{choice}.".capitalize.red 
+      puts "#{member.name} ".capitalize.yellow +  "voted for " + "#{choice}.".capitalize.red 
       end
     votes
   end
@@ -30,7 +30,7 @@ class Jury
 
   def announce_winner(vote_results)
       winner = vote_results.max_by {|finalist, vote_results| vote_results}.first
-      puts "                " +  "#{winner.name  }".capitalize.red + " wins" + "  s  ".upcase.red + "  u  ".upcase.green + "  r  ".upcase.blue + "  v  ".upcase.pink + "  i  ".upcase.light_blue + "  v  ".upcase.light_grey + "  r  ".upcase.black 
+      puts "                " +  "#{winner.name  }".capitalize.red + " wins" + "  s  ".upcase.red + "  u  ".upcase.green + "  r  ".upcase.blue + "  v  ".upcase.pink + "  i  ".upcase.light_blue + "  v  ".upcase.light_grey + "  r  ".upcase.yellow 
       winner
   end
 
