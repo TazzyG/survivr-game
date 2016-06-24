@@ -21,11 +21,13 @@ class Game
   end
 
   def merge(name)
-  	members = @tribes.map(&:members).flatten
-  	
-  	Tribe.new(name: name, members: members)	
-  end
- 
+		members = @tribes.map(&:members).flatten
+		merged_tribe = Tribe.new({name: name, members: members})
+		self.clear_tribes
+		self.add_tribe(merged_tribe)
+		merged_tribe
+	end
+
   def individual_immunity_challenge
     immune = @tribes[0].members.sample
 	  immune
